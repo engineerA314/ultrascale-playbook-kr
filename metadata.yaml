@@ -1,0 +1,14 @@
+title: "The Ultra-Scale Playbook (Korean Translation)"
+author: "UltraScale Playbook 한국어 번역팀"
+lang: ko
+documentclass: book
+toc: true
+toc-depth: 2
+geometry: margin=1in
+# Fonts for XeLaTeX (macOS default Korean: Apple SD Gothic Neo; replace if needed)
+mainfont: "Apple SD Gothic Neo"
+CJKmainfont: "Apple SD Gothic Neo"
+monofont: "Source Code Pro"
+colorlinks: true
+linkcolor: blue
+

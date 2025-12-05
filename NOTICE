@@ -1,0 +1,14 @@
+This repository includes a Korean translation of:
+“The Ultra-Scale Playbook: Training LLMs on GPU Clusters” (2025)
+Authors: Nouamane Tazi, Ferdinand Mom, Haojun Zhao, Phuc Nguyen, Mohamed Mekkouri, Leandro Werra, Thomas Wolf
+Source: https://huggingface.co/spaces/nanotron/ultrascale-playbook
+License: Apache License 2.0
+
+Modifications:
+- Korean translation of the text
+- Additional explanations/annotations for Korean readers
+- Repository structure and build instructions for PDF
+
+This is an unofficial translation. Original copyright and notices are preserved.
+
+
