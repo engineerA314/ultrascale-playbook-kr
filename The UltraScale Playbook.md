@@ -1,5 +1,7 @@
 # The ultra-scale playbook
 
+![image.png](images/title_image.png)
+
 수천 개의 GPU가 완벽한 조화를 이루며 윙윙거린다. 오늘날 가장 강력한 AI 모델을 훈련하기 위해 필요한 것은 바로 그것이다 — 최근까지도 엘리트 연구소들만이 다룰 수 있던 컴퓨팅 파워의 교향곡이다. 오픈소스는 이 풍경을 변화시켰지만, 완전히 바꾸지는 못했다. 그렇다, 당신은 최신 Llama나 DeepSeek 모델을 다운로드할 수 있다. 그렇다, 그들의 기술 및 실험 보고서를 읽을 수도 있다. 그러나 가장 어려운 부분 — 이러한 거대한 시스템을 훈련하기 위해 GPU를 조율하는 데 필요한 훈련 코드, 지식, 그리고 기술들 — 은 여전히 복잡성에 싸여 있고, 서로 단절된 논문들과 종종 비공개된 코드베이스 속에 흩어져 있다.
 
 이 오픈소스 책은 그 상황을 바꾸기 위해 존재한다. 기초부터 시작하여, 우리는 대규모 언어 모델(LLM)의 훈련을 단일 GPU에서 수십, 수백, 심지어 수천 개의 GPU로 확장하는 데 필요한 지식을 안내할 것이다. 이 과정에서 이론은 실제 코드 예제와 재현 가능한 벤치마크를 통해 설명할 것이다.
@@ -343,6 +345,7 @@ def register_backward_hook(self, hook):
 이 방식은 모델 전체의 역전파 시간 중 그래디언트 동기화를 기다리는 시간을 줄여준다. 하나의 훈련 스텝 안에서 역전파와 그래디언트 동기화를 병렬적으로 수행할 수 있어, 데이터 병렬화의 효율이 크게 향상된다.
 
 - Picotron 예제: 겹침(overlap)을 포함한 DP 구현
+
   ```python
   class DataParallelNaive(nn.Module):
       """
@@ -408,6 +411,7 @@ GPU는 작은 텐서 여러 개를 각각 처리하는 것보다 큰 텐서를 �
 이 전략을 이해하기 쉽게 말하자면: 많은 작은 물건을 각각 배송하는 대신, 박스에 묶어 한 번에 보내는 것과 같다. 그래디언트를 버킷으로 묶고, 각 버킷에 대해 하나의 all-reduce 연산만 수행하면, 통신 오버헤드를 크게 줄이고 속도도 향상시킬 수 있다.
 
 - Picotron 예제: 버킷 DP 구현
+
   ```python
   class DataParallelBucket(nn.Module):
       """
@@ -771,6 +775,7 @@ $X \times W$
 다음은 column-wise 텐서 병렬화를 구현한 코드이다:
 
 - Picotron 의 Column 병렬 TP 구현
+
   ```python
   class ColumnParallelLinear(torch.nn.Module):
       """Column Parallel Linear layer
@@ -852,6 +857,7 @@ $X \times W$
 다음은 row-wise 텐서 병렬화를 구현한 코드이다:
 
 - Picotron의 Row 병렬 TP 구현
+
   ```python
   class RowParallelLinear(nn.Module):
       """Linear layer with row parallelism.
@@ -1261,6 +1267,7 @@ $r_{bubble} = \frac{(p - 1) \cdot (t_f + t_b)}{t_f + t_b} = p - 1$
 Picotron에서 AFAB 파이프라인의 전체 구현을 확인할 수 있다.
 
 - Picotron의 AFAB PP 구현
+
   ```python
   def train_step_pipeline_afab(model, data_loader, tensor_shapes, device, dtype):
       logging_loss: torch.float32 = 0.0
@@ -1324,6 +1331,7 @@ $r_{\text{bubble}} = \frac{(p - 1) \cdot (t_f + t_b)}{m \cdot (t_f + t_b)} = \fr
 Picotron에서 1F1B의 전체 구현을 확인할 수 있다:
 
 - Picotron 1F1B PP 구현
+
   ```python
   def train_step_pipeline_1f1b(model, data_loader, tensor_shapes, device, dtype):
       num_warmup_microbatches = min(pgm.process_group_manager.pp_world_size - pgm.process_group_manager.pp_rank - 1, data_loader.grad_acc_steps)
@@ -1755,6 +1763,7 @@ GPU의 코어에서 실행되는 코드 조각을 **커널(kernel)**이라고 �
 커널을 실행하려면 커널 외에도 호스트에서 실행되는 **호스트 코드**가 필요하며, 이 코드는 데이터 할당을 준비하고, 데이터 및 코드를 로딩하는 역할을 한다.
 
 - 두 벡터를 더하는 CUDA kernel 을 위한 호스트 코드
+
   ```c
   // Host code
   void vecAdd(float* h_A, float *h_B, float *h_c, int n) {
@@ -1785,7 +1794,9 @@ GPU의 코어에서 실행되는 코드 조각을 **커널(kernel)**이라고 �
       cudaFree(d_C);
   }
   ```
+
 - 벡터 덧셈 커널의 정의를 포함한 디바이스 코드
+
   ```c
   // Device code
   __global__ void VecAdd(float* A, float* B, float* C, int N)

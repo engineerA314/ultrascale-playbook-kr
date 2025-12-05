@@ -1,6 +1,8 @@
 # UltraScale Playbook 한국어 번역 프로젝트
 
-Ultra-Scale Playbook은 Huggingface 의 nanotron 팀에서 작성한, 대규모 GPU 클러스터에서 LLM을 효율적으로 학습시키는 과정에 대한 종합 가이드입니다. 데이터·텐서·파이프라인·시퀀스/컨텍스트·전문가 병렬화와 ZeRO, 통신-계산 오버랩, 프로파일링/Nsight, 커널 최적화(예: FlashAttention), 그리고 실제 벤치마크와 코드 레퍼런스(picotron·nanotron)를 체계적으로, 그리고 구체적으로 다루는 글로, LLM 사전학습 (Pretraining) 에 대한 전반적이면서도 구체적인 지식을 얻을 수 있습니다.
+![image.png](images/title_image.png)
+
+Ultra-Scale Playbook은 Hugging Face 의 nanotron 팀에서 작성한, 대규모 GPU 클러스터에서 LLM을 효율적으로 학습시키는 과정에 대한 종합 가이드입니다. 데이터·텐서·파이프라인·시퀀스/컨텍스트·전문가 병렬화와 ZeRO, 통신-계산 오버랩, 프로파일링/Nsight, 커널 최적화(예: FlashAttention), 그리고 실제 벤치마크와 코드 레퍼런스(picotron·nanotron)를 체계적으로, 그리고 구체적으로 다루는 글로, LLM 사전학습 (Pretraining) 에 대한 전반적이면서도 구체적인 지식을 얻을 수 있습니다.
 
 이 저장소는 Hugging Face의 “The Ultra-Scale Playbook: Training LLMs on GPU Clusters”를 한국어로 번역한 비공식 프로젝트입니다.
 
